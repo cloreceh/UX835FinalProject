@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Approach — know the walk before you go</title>
+<meta name="description" content="Step counts, stairs and inclines from the curb to your seat, for public venues.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="#" data-nav="venues">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="dot"></span><span class="rule"></span><span class="dot end"></span>
+      </span>
+      <span class="brand-name">Approach</span>
+    </a>
+    <p class="brand-tag">Know the walk before you go</p>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+
+  <!-- VENUE LIST -->
+  <section id="view-venues" class="view">
+    <div class="lede">
+      <h1>How far is it, really?</h1>
+      <p>Step counts, stairs, inclines and rest points for the exact path from where you arrive to where you sit. Measured once, then kept current by the people who walk it.</p>
+    </div>
+
+    <div class="stride-bar">
+      <label for="stride-select">Count steps using</label>
+      <select id="stride-select"></select>
+      <span class="stride-note" id="stride-note"></span>
+    </div>
+
+    <h2 class="section-head">Venues</h2>
+    <ul class="venue-list" id="venue-list"></ul>
+
+    <p class="disclaimer">Sample data for demonstration. Nothing here has been surveyed yet.</p>
+  </section>
+
+  <!-- ROUTE PLANNER -->
+  <section id="view-route" class="view" hidden>
+    <button class="back" data-nav="venues">Back to venues</button>
+
+    <div class="venue-head">
+      <div>
+        <h1 id="venue-name"></h1>
+        <p class="venue-meta"><span id="venue-kind"></span> · <span id="venue-city"></span></p>
+      </div>
+      <div id="venue-trust"></div>
+    </div>
+
+    <p class="venue-note" id="venue-note"></p>
+
+    <dl class="facts" id="venue-facts"></dl>
+
+    <h2 class="section-head">Build your trip</h2>
+    <div class="builder">
+      <div class="field">
+        <label for="origin-select">Starting from</label>
+        <select id="origin-select"></select>
+      </div>
+      <div class="field">
+        <label for="section-select">Going to</label>
+        <select id="section-select"></select>
+      </div>
+      <fieldset class="field detours">
+        <legend>Add a round trip from your seat</legend>
+        <div id="detour-list"></div>
+      </fieldset>
+    </div>
+
+    <div class="totals" id="totals"></div>
+
+    <div class="flags" id="flags"></div>
+
+    <h2 class="section-head">The route, segment by segment</h2>
+    <ol class="route" id="route"></ol>
+
+    <h2 class="section-head">Recent reports</h2>
+    <div id="reports"></div>
+
+    <div class="contribute">
+      <h3>Walked this route?</h3>
+      <p>Record your walk to help confirm the numbers, or flag something that has changed.</p>
+      <div class="contribute-actions">
+        <button class="btn primary" data-stub="record">Record my walk</button>
+        <button class="btn" data-stub="report">Report a change</button>
+      </div>
+      <p class="stub-msg" id="stub-msg" role="status"></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Approach is a design prototype. Route data is invented for demonstration and should not be used to plan a real trip.</p>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
