@@ -41,6 +41,40 @@
       <span class="stride-note" id="stride-note"></span>
     </div>
 
+    <div class="profile-panel" id="profile-panel">
+      <div class="profile-panel-head">
+        <h2 class="profile-panel-title">Your profile</h2>
+        <p class="profile-hint">Filter venues by what actually works for you, not just what's playing.</p>
+      </div>
+      <div class="profile-grid">
+        <fieldset class="field">
+          <legend>Environment</legend>
+          <label class="chk"><input type="checkbox" id="env-indoor"> Indoor</label>
+          <label class="chk"><input type="checkbox" id="env-outdoor"> Outdoor</label>
+          <label class="chk"><input type="checkbox" id="env-mixed"> Mixed</label>
+        </fieldset>
+        <div class="field">
+          <label for="size-select">Largest venue size</label>
+          <select id="size-select"></select>
+        </div>
+        <div class="field">
+          <label for="walktime-select">Longest walk you'll do</label>
+          <select id="walktime-select">
+            <option value="">Any</option>
+            <option value="10">Up to 10 min</option>
+            <option value="20">Up to 20 min</option>
+            <option value="30">Up to 30 min</option>
+          </select>
+        </div>
+        <fieldset class="field">
+          <legend>Seating</legend>
+          <label class="chk"><input type="checkbox" id="seat-integrated"> Integrated seating only</label>
+          <label class="chk"><input type="checkbox" id="seat-sightline"> Clear sightline only</label>
+          <label class="chk"><input type="checkbox" id="seat-companion"> Companion seat required</label>
+        </fieldset>
+      </div>
+    </div>
+
     <h2 class="section-head">Venues</h2>
     <ul class="venue-list" id="venue-list"></ul>
 
@@ -63,6 +97,18 @@
 
     <dl class="facts" id="venue-facts"></dl>
 
+    <h2 class="section-head">Parking &amp; drop-off</h2>
+    <div class="passport-list" id="parking-list"></div>
+
+    <h2 class="section-head">Elevators</h2>
+    <div class="passport-list" id="elevator-list"></div>
+
+    <h2 class="section-head">Restrooms</h2>
+    <div class="passport-list" id="restroom-list"></div>
+
+    <h2 class="section-head">Seating</h2>
+    <div class="passport-list" id="seating-list"></div>
+
     <h2 class="section-head">Build your trip</h2>
     <div class="builder">
       <div class="field">
@@ -81,6 +127,8 @@
 
     <div class="totals" id="totals"></div>
 
+    <div class="exertion" id="exertion"></div>
+
     <div class="flags" id="flags"></div>
 
     <h2 class="section-head">The route, segment by segment</h2>
@@ -90,12 +138,46 @@
     <div id="reports"></div>
 
     <div class="contribute">
-      <h3>Walked this route?</h3>
-      <p>Record your walk to help confirm the numbers, or flag something that has changed.</p>
-      <div class="contribute-actions">
-        <button class="btn primary" data-stub="record">Record my walk</button>
-        <button class="btn" data-stub="report">Report a change</button>
-      </div>
+      <h3>Add to this venue's passport</h3>
+      <p>Know something about parking, an elevator, a restroom, or accessible seating that isn't listed above? Add it.</p>
+      <form class="contribute-form" id="passport-form">
+        <div class="field">
+          <label for="passport-category">What are you adding?</label>
+          <select id="passport-category">
+            <option value="parking">Parking / drop-off</option>
+            <option value="elevator">Elevator</option>
+            <option value="restroom">Restroom</option>
+            <option value="seating">Seating</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="passport-text">What did you find?</label>
+          <input type="text" id="passport-text" placeholder="e.g. Elevator near Gate D, staff-operated" required>
+        </div>
+        <button class="btn primary" type="submit">Add to passport</button>
+      </form>
+
+      <h3>Walked this route or attended an event here?</h3>
+      <p>Record your walk to help confirm the numbers, or flag something that has changed since it was surveyed.</p>
+      <form class="contribute-form" id="report-form">
+        <div class="field">
+          <label for="report-tag">Tag</label>
+          <select id="report-tag">
+            <option value="elevator">Elevator</option>
+            <option value="correction">Correction</option>
+            <option value="heat">Heat / exertion</option>
+            <option value="seating">Seating</option>
+            <option value="good">Good experience</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="report-text">What happened?</label>
+          <textarea id="report-text" rows="3" placeholder="What changed, or how the walk actually felt" required></textarea>
+        </div>
+        <button class="btn" type="submit">Submit report</button>
+      </form>
+
       <p class="stub-msg" id="stub-msg" role="status"></p>
     </div>
   </section>

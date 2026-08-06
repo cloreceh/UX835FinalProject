@@ -198,7 +198,9 @@ h1 {
   color: var(--ink-3);
 }
 
-select {
+select,
+input[type="text"],
+textarea {
   font: inherit;
   font-size: 15px;
   padding: 9px 12px;
@@ -209,6 +211,42 @@ select {
   max-width: 100%;
 }
 
+textarea { width: 100%; resize: vertical; }
+
+/* ---------- profile filter ---------- */
+
+.profile-panel {
+  margin: 16px 0 0;
+  padding: 18px 20px 20px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.profile-panel-head { margin-bottom: 14px; }
+
+.profile-panel-title {
+  margin: 0 0 2px;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.profile-hint {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+.profile-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.profile-grid .field { margin: 0; }
+.profile-grid .chk { margin: 0 8px 8px 0; }
+
 /* ---------- venue list ---------- */
 
 .venue-list {
@@ -217,6 +255,17 @@ select {
   padding: 0;
   display: grid;
   gap: 12px;
+}
+
+.venue-group-head {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 14px 0 -2px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
 }
 
 .venue-card {
@@ -231,6 +280,9 @@ select {
   display: block;
 }
 .venue-card:hover { border-color: var(--ink-3); }
+
+.venue-mismatch .venue-card { opacity: 0.68; }
+.venue-mismatch .venue-card:hover { opacity: 1; }
 
 .venue-card h3 {
   margin: 0 0 4px;
@@ -250,6 +302,22 @@ select {
   font-size: 15px;
   color: var(--ink-2);
 }
+
+.card-badges {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.profile-match {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.profile-match.yes { color: var(--easy); }
+.profile-match.no { color: var(--ink-3); text-transform: none; letter-spacing: normal; }
 
 /* ---------- trust badges ---------- */
 
@@ -327,6 +395,48 @@ select {
   font-size: 15px;
 }
 
+/* ---------- accessibility passport ---------- */
+
+.passport-list {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.passport-item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.passport-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.passport-name { font-weight: 600; font-size: 16px; }
+
+.passport-detail {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+.passport-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.passport-item.community { border-left: 3px solid var(--signal); }
+
+.tag.community-tag { background: #DCE7F3; color: var(--signal); }
+
 /* ---------- builder ---------- */
 
 .builder {
@@ -347,7 +457,9 @@ select {
   padding: 0;
 }
 
-.field select { width: 100%; }
+.field select,
+.field input[type="text"],
+.field textarea { width: 100%; }
 
 .detours {
   grid-column: 1 / -1;
@@ -441,6 +553,58 @@ select {
   display: block;
 }
 .flag .fbody { color: var(--ink-2); }
+
+/* ---------- exertion ---------- */
+
+.exertion {
+  margin-top: 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--ink-3);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+}
+.exertion.low    { border-left-color: var(--easy); }
+.exertion.moderate { border-left-color: var(--caution); }
+.exertion.high    { border-left-color: var(--alert); }
+
+.exertion-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.exertion-tier {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.exertion.low    .exertion-tier { color: var(--easy); }
+.exertion.moderate .exertion-tier { color: var(--caution); }
+.exertion.high    .exertion-tier { color: var(--alert); }
+
+.exertion-crowd {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.exertion-crowd select { padding: 6px 10px; font-size: 14px; }
+
+.exertion-sentence {
+  margin: 12px 0 0;
+  font-size: 15px;
+  color: var(--ink-2);
+  max-width: 44rem;
+}
 
 /* ---------- the route strip (signature element) ---------- */
 
@@ -597,9 +761,18 @@ select {
   border-radius: var(--radius);
 }
 .contribute h3 { margin: 0 0 6px; font-size: 20px; letter-spacing: -0.02em; }
+.contribute h3:not(:first-child) { margin-top: 30px; }
 .contribute p { margin: 0 0 16px; color: var(--ink-2); font-size: 15px; }
 
 .contribute-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.contribute-form {
+  display: grid;
+  gap: 14px;
+  max-width: 32rem;
+}
+.contribute-form .field { margin: 0; }
+.contribute-form .btn { justify-self: start; }
 
 .stub-msg {
   margin: 14px 0 0;
@@ -630,6 +803,8 @@ select {
   .totals { padding: 18px; }
   .stat .v { font-size: 26px; }
   .route { padding-left: 12px; }
+  .profile-grid { grid-template-columns: 1fr; }
+  .exertion-head { align-items: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {

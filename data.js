@@ -8,6 +8,30 @@ const STRIDE_PRESETS = [
   { id: "long", label: "Longer stride", meters: 0.79 }
 ];
 
+/* Ordered small to large so profile filtering can compare by rank. */
+const SIZE_ORDER = ["intimate", "theatre", "arena", "stadium"];
+
+const SIZE_LABELS = {
+  intimate: "Intimate venue",
+  theatre: "Theatre-sized",
+  arena: "Arena-sized",
+  stadium: "Stadium-sized"
+};
+
+/* Baseline exertion contribution from a venue's climate, before route and crowd are factored in. */
+const CLIMATE_EXERTION = {
+  "air-conditioned": "low",
+  "outdoor-shaded": "medium",
+  "outdoor-mixed": "medium",
+  "outdoor-full-sun": "high"
+};
+
+const CROWD_LEVELS = [
+  { id: "light", label: "Light — doors just opened", factor: 0 },
+  { id: "typical", label: "Typical for this venue", factor: 1 },
+  { id: "packed", label: "Sold out / packed concourse", factor: 2 }
+];
+
 const VENUES = [
   {
     id: "riverfront",
@@ -17,11 +41,25 @@ const VENUES = [
     trust: "verified",
     surveyed: "June 14, 2026",
     note: "Upper bowl has no step-free route. Lower bowl is reachable by elevator from every entrance.",
+    environment: "indoor",
+    sizeCategory: "arena",
+    climate: {
+      type: "air-conditioned",
+      description: "Air conditioned throughout. Concourse runs warm on sold-out nights when doors and crowd flow raise the ambient temperature.",
+      exertionBaseline: "low"
+    },
+    elevators: [
+      { location: "Gate A lobby", servesLevels: "Concourse to lower bowl", public: true },
+      { location: "Gate C, beside the skywalk stairs", servesLevels: "Skywalk to Gate C concourse", public: true },
+      { location: "Center Street Garage, level 3", servesLevels: "All garage levels to skywalk", public: true },
+      { location: "Backstage / loading dock", servesLevels: "All levels", public: false }
+    ],
+    restrooms: [
+      { location: "Gate A concourse", accessibleStalls: 2, sharedQueue: true, notes: "" },
+      { location: "Upper concourse, near Portal 218", accessibleStalls: 2, sharedQueue: true, notes: "Line can back up between periods/acts." }
+    ],
     facts: [
-      ["Accessible drop-off", "Gate A, curbside, 40 m from doors"],
-      ["Elevators", "4, two of them public"],
-      ["Accessible restroom stalls", "2 per restroom, shared queue"],
-      ["Indoor climate", "Air conditioned, concourse runs warm on sold-out nights"]
+      ["Accessible drop-off", "Gate A, curbside, 40 m from doors"]
     ],
     origins: [
       {
@@ -57,6 +95,10 @@ const VENUES = [
         id: "102",
         name: "Section 102, Row F (aisle)",
         level: "Lower bowl",
+        accessibleSeating: "integrated",
+        sightline: "clear",
+        companionSeating: true,
+        relativeToStage: "General bowl seating, house right, roughly 45 m from the floor stage.",
         segments: [
           { name: "Gate to concourse", meters: 130, stairs: 0, incline: 0, surface: "Level, carpeted", rests: 3, note: "Crowded 30 minutes before doors." },
           { name: "Concourse to Portal 102", meters: 90, stairs: 0, incline: 0, surface: "Level", rests: 1, note: "" },
@@ -67,6 +109,10 @@ const VENUES = [
         id: "218",
         name: "Section 218, Row C",
         level: "Upper bowl",
+        accessibleSeating: "integrated",
+        sightline: "clear",
+        companionSeating: true,
+        relativeToStage: "Upper bowl, house left, roughly 90 m from the floor stage.",
         segments: [
           { name: "Gate to concourse", meters: 130, stairs: 0, incline: 0, surface: "Level, carpeted", rests: 3, note: "" },
           { name: "Concourse to ramp base", meters: 75, stairs: 0, incline: 0, surface: "Level", rests: 1, note: "" },
@@ -79,6 +125,10 @@ const VENUES = [
         id: "wc12",
         name: "Section 112, accessible platform",
         level: "Lower bowl",
+        accessibleSeating: "segregated-platform",
+        sightline: "obstructed",
+        companionSeating: true,
+        relativeToStage: "Raised platform at the rear of the lower bowl, house right, roughly 50 m from the floor stage.",
         segments: [
           { name: "Gate to concourse", meters: 130, stairs: 0, incline: 0, surface: "Level, carpeted", rests: 3, note: "" },
           { name: "Concourse to Portal 112", meters: 55, stairs: 0, incline: 0, surface: "Level", rests: 2, note: "" },
@@ -106,11 +156,22 @@ const VENUES = [
     trust: "community",
     surveyed: "May 2, 2026",
     note: "Small and mostly step-free on the orchestra level. Balcony is stairs only.",
+    environment: "indoor",
+    sizeCategory: "theatre",
+    climate: {
+      type: "air-conditioned",
+      description: "Air conditioned. Lobby stays cool; house warms up slightly during a full balcony show.",
+      exertionBaseline: "low"
+    },
+    elevators: [
+      { location: "Box office lobby", servesLevels: "Lobby to balcony, on request", public: true }
+    ],
+    restrooms: [
+      { location: "Lobby, ground floor", accessibleStalls: 1, sharedQueue: false, notes: "" },
+      { location: "Balcony landing", accessibleStalls: 1, sharedQueue: false, notes: "" }
+    ],
     facts: [
-      ["Accessible drop-off", "Main Street, directly at the doors"],
-      ["Elevators", "1, to balcony only"],
-      ["Accessible restroom stalls", "1 in each restroom"],
-      ["Indoor climate", "Air conditioned, lobby stays cool"]
+      ["Accessible drop-off", "Main Street, directly at the doors"]
     ],
     origins: [
       {
@@ -136,6 +197,10 @@ const VENUES = [
         id: "orch",
         name: "Orchestra, Row L (aisle)",
         level: "Orchestra",
+        accessibleSeating: "integrated",
+        sightline: "clear",
+        companionSeating: true,
+        relativeToStage: "Orchestra level, center aisle, roughly 15 m from the stage apron.",
         segments: [
           { name: "Lobby to house doors", meters: 30, stairs: 0, incline: 0, surface: "Level, carpeted", rests: 2, note: "" },
           { name: "House door to Row L", meters: 18, stairs: 3, incline: 4, surface: "Gently raked aisle", rests: 0, note: "Three shallow steps." }
@@ -145,6 +210,10 @@ const VENUES = [
         id: "balc",
         name: "Balcony, Row B",
         level: "Balcony",
+        accessibleSeating: "integrated",
+        sightline: "clear",
+        companionSeating: true,
+        relativeToStage: "Balcony front row, roughly 20 m from and above the stage.",
         segments: [
           { name: "Lobby to stairwell", meters: 25, stairs: 0, incline: 0, surface: "Level", rests: 1, note: "" },
           { name: "Stairwell to balcony", meters: 30, stairs: 34, incline: 0, surface: "Two flights, landing between", rests: 1, note: "Elevator available on request at the box office." },
@@ -169,11 +238,19 @@ const VENUES = [
     trust: "unverified",
     surveyed: "Not yet surveyed",
     note: "Outdoor. Route data submitted by one contributor and not yet confirmed.",
+    environment: "outdoor",
+    sizeCategory: "arena",
+    climate: {
+      type: "outdoor-full-sun",
+      description: "Open air. No shade over the lawn or the walk in from the north lot; the covered pavilion seating itself is shaded.",
+      exertionBaseline: "high"
+    },
+    elevators: [],
+    restrooms: [
+      { location: "Near the north gate", accessibleStalls: 0, sharedQueue: true, notes: "Portable units. No confirmed accessible stall — unverified." }
+    ],
     facts: [
-      ["Accessible drop-off", "Reported near the north gate, unconfirmed"],
-      ["Elevators", "None"],
-      ["Accessible restroom stalls", "Unknown"],
-      ["Indoor climate", "Open air, no shade over the lawn"]
+      ["Accessible drop-off", "Reported near the north gate, unconfirmed"]
     ],
     origins: [
       {
@@ -190,6 +267,10 @@ const VENUES = [
         id: "pav",
         name: "Pavilion, Row 12",
         level: "Covered seating",
+        accessibleSeating: "integrated",
+        sightline: "clear",
+        companionSeating: true,
+        relativeToStage: "Covered pavilion, center block, roughly 40 m from the stage.",
         segments: [
           { name: "Gate to pavilion entry", meters: 180, stairs: 0, incline: 4, surface: "Paved path, downhill", rests: 1, note: "" },
           { name: "Entry to Row 12", meters: 25, stairs: 14, incline: 9, surface: "Stepped aisle", rests: 0, note: "" }
